@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  withsecure-api:
+    build: .
+    container_name: withsecure-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.json:/app/config.json:ro
+    environment:
+      - LOG_LEVEL=info
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optionnel: Nginx comme reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: withsecure-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - withsecure-api
+    restart: unless-stopped

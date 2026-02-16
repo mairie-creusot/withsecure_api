@@ -1,0 +1,8 @@
+{
+    "client_id" : "your_id",
+    "client_secret" : "your_client_secret",
+    "api_prod_url" : "https://api.connect.withsecure.com",
+    "api_cicd_url" : "https://api.connect-ci.fsapi.com",
+    "api_staging_url" : "https://api.connect-stg.fsapi.com",
+    "scopes" : "connect.api.read connect.api.write"
+}
